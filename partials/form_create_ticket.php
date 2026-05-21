@@ -1,7 +1,7 @@
 <div class="card shadow-sm p-4 mt-4">
     <h4 class="card-title mb-4">Créer un ticket</h4>
     
-    <form action="/myticket/functions/ticket.php" method="POST">
+    <form action="/myticket/traitements/traitement_create_ticket.php" method="POST">
         
         <div class="mb-3">
             <label for="title" class="form-label fw-semibold">Titre</label>

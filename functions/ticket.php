@@ -1,4 +1,5 @@
 <?php 
+require_once 'database.php';
 
 function get_tickets_about_user($session_id){
   $pdo = getPDO();  
@@ -13,4 +14,19 @@ function get_tickets_about_user($session_id){
 
   return $results;
 
+}
+
+function add_tickets_with_users($title, $description, $priority, $session_id) {
+  $pdo = getPDO();
+  $sql = "INSERT INTO tickets (title, description, priority, author, status, user_id, created_at, updated_at) 
+          VALUES (:title, :description, :priority, :author, 'send', :user_id, NOW(), NOW())";
+  $stmt = $pdo->prepare($sql);
+  $ok = $stmt->execute([
+    ':title'       => $title,
+    ':description' => $description,
+    ':priority'    => $priority,
+    ':author'      => $_SESSION['name'], 
+    ':user_id'     => $session_id           
+  ]);
+  return $ok;
 }
