@@ -13,7 +13,7 @@
 </head>
 
 <body class="bg-dark d-flex flex-column min-vh-100">
-
+<?php require_once "../partials/header.php"; ?>
 
 <div class="container d-flex justify-content-center align-items-center flex-grow-1">
 
