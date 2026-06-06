@@ -1,34 +1,31 @@
-<?php
+<?php 
 session_start();
 require_once "../functions/ticket.php";
-$result = get_tickets_about_user($_SESSION['user_id']);
+$result = get_tickets_by_technician($_SESSION['name']);
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Bootstrap -->
+    <title>Vos tickets en cours</title>
+    <?php require_once "../partials/header.php"; ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <title>Vos tickets</title>
 </head>
 <body>
-
-<?php require_once "../partials/header.php"; ?>
-
+    
 <?php if (check_connected_user()): ?>
 
     <?php if (empty($result)): ?>
 
-        <p>Vous n'avez aucun ticket !</p>
+        <p>Vous ne gerez aucun ticket !</p>
 
     <?php else: ?>
 
         <div class="container">
             <div class="row mt-4 mb-4">
-                <h1 class="text-center">Vos tickets</h1>
+                <h1 class="text-center">Vos tickets en cours :</h1>
             </div>
 
             <div class="row">
@@ -57,11 +54,10 @@ $result = get_tickets_about_user($_SESSION['user_id']);
                             <div class="card-body d-flex gap-2">
                                 <a href="/myticket/pages/single_ticket.php?id=<?php echo $ticket["id"]; ?>"
                                    class="btn btn-primary btn-sm">
-                                    Consulter votre ticket
+                                    Consulter le ticket
                                 </a>
                             </div>
-
-                        </div>
+                            </div>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -72,6 +68,7 @@ $result = get_tickets_about_user($_SESSION['user_id']);
 <?php else:
     header("Location: /myticket/pages/connexion.php");
 endif; ?>
+
 
 </body>
 </html>

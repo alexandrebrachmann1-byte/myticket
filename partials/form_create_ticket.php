@@ -34,6 +34,7 @@
                 <option value="faible">Faible</option>
                 <option value="moyenne">Moyenne</option>
                 <option value="haute">Haute</option>
+                <option value="critique">Critique</option>
             </select>
         </div>
 

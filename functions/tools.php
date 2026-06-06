@@ -12,3 +12,4 @@ function check_connected_user(){
     }
     return false;
 }
+

@@ -1,5 +1,5 @@
 <?php 
-if($_SESSION["role"] === "user"): 
+if($_SESSION["role"] === "utilisateur"): 
 require_once "../functions/database.php"; 
 require_once "../functions/ticket.php";
 
@@ -21,7 +21,7 @@ $result = get_tickets_about_user($_SESSION["user_id"]);
 <?php else: ?>
 
 <div class="container mt-4">
-    <h4 class="mb-3">Mes tickets</h4>
+    <h4 class="mb-3">Vos tickets</h4>
     <div class="row">
         <?php foreach($result as $ticket): ?>
             <div class="col-md-6 col-lg-4 mb-4">
@@ -45,12 +45,7 @@ $result = get_tickets_about_user($_SESSION["user_id"]);
                     </ul>
 
                     <div class="card-body d-flex gap-2">
-                        <a href="/myticket/pages/single_ticket.php?id=<?php echo $ticket["id"]; ?>" class="btn btn-primary btn-sm">Voir</a>
-                        <a href="/myticket/pages/edit_ticket.php?id=<?php echo $ticket["id"]; ?>" class="btn btn-warning btn-sm">Modifier</a>
-                        <form method="POST" action="../traitements/traitement_delete_ticket.php">
-                            <input type="hidden" name="id" value="<?php echo $ticket['id']; ?>">
-                            <button class="btn btn-danger btn-sm">Supprimer</button>
-                        </form>
+                        <a href="/myticket/pages/single_ticket.php?id=<?php echo $ticket["id"]; ?>" class="btn btn-primary btn-sm">Consulter votre ticket</a>
                     </div>
                 </div>
             </div>
