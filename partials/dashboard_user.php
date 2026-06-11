@@ -6,7 +6,7 @@ require_once "../functions/ticket.php";
 $result = get_tickets_about_user($_SESSION["user_id"]);
 ?>
 
-<p>Bienvenue <?php echo $_SESSION["name"]; ?> !</p>
+<p class="welcome-text">Bienvenue <?php echo htmlspecialchars($_SESSION["name"]); ?> !</p>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -45,7 +45,7 @@ $result = get_tickets_about_user($_SESSION["user_id"]);
                     </ul>
 
                     <div class="card-body d-flex gap-2">
-                        <a href="/myticket/pages/single_ticket.php?id=<?php echo $ticket["id"]; ?>" class="btn btn-primary btn-sm">Consulter votre ticket</a>
+                        <a href="/myticket/pages/single_ticket.php?id=<?php echo $ticket["id"]; ?>" class="btn btn-primary btn-sm">Consulter</a>
                     </div>
                 </div>
             </div>

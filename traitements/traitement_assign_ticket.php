@@ -4,7 +4,7 @@ require_once "../functions/ticket.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ticket_id = $_POST['ticket_id'];
-    $name = $_SESSION['name']; // le nom du technicien connecté
+    $name = $_SESSION['name']; 
 
     $success = assign_ticket_to_technician($ticket_id, $name);
 

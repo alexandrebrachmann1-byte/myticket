@@ -93,3 +93,77 @@ function update_priority_ticket($ticket_id, $priority) {
         ':ticket_id' => $ticket_id
     ]);
 }
+
+function close_ticket($ticket_id) {
+    $pdo = getPDO();
+    $sql = "UPDATE tickets SET status = 'Fermé', updated_at = NOW() WHERE id = :ticket_id";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([
+        ':ticket_id' => $ticket_id
+    ]);
+}
+
+function total_number_of_tickets() {
+    $pdo = getPDO();
+    $sql = "SELECT COUNT(*) FROM tickets";
+    return $pdo->query($sql)->fetchColumn();
+}
+
+function total_number_of_tickets_by_status($status) {
+    $pdo = getPDO();
+    $sql = "SELECT COUNT(*) FROM tickets WHERE status = :status";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':status' => $status]);
+    return $stmt->fetchColumn();
+}
+
+function get_tickets_by_priority($priority) {
+    $pdo = getPDO();
+    $sql = "SELECT * FROM tickets WHERE priority = :priority";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':priority' => $priority]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_recently_updated_tickets() {
+    $pdo = getPDO();
+    $sql = "SELECT * FROM tickets ORDER BY updated_at DESC LIMIT 5";
+    $stmt = $pdo->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function search_and_filter_tickets($search = '', $status = '', $priority = '', $author = '', $sort = 'created_at') {
+    $pdo = getPDO();
+
+    $allowed_sorts = ['created_at', 'updated_at'];
+    $sort = in_array($sort, $allowed_sorts) ? $sort : 'created_at';
+
+    $sql = "SELECT * FROM tickets WHERE 1=1";
+    $params = [];
+
+    if (!empty($search)) {
+        $sql .= " AND (title LIKE :search OR description LIKE :search)";
+        $params[':search'] = '%' . $search . '%';
+    }
+
+    if (!empty($status)) {
+        $sql .= " AND status = :status";
+        $params[':status'] = $status;
+    }
+
+    if (!empty($priority)) {
+        $sql .= " AND priority = :priority";
+        $params[':priority'] = $priority;
+    }
+
+    if (!empty($author)) {
+        $sql .= " AND author LIKE :author";
+        $params[':author'] = '%' . $author . '%';
+    }
+
+    $sql .= " ORDER BY $sort DESC";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

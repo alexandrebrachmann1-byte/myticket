@@ -13,10 +13,8 @@ if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] !== "") :
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="/myticket/assets/css/single_ticket.css">
     <title><?php echo $ticket["title"]; ?></title>
 </head>
 <body class="bg-light">
@@ -47,10 +45,13 @@ if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] !== "") :
                 </ul>
             </div>
 
-        <!-- Modifier le statut (technicien uniquement) -->
-<?php if ($_SESSION['role'] === 'technicien'): 
+        <!-- Modifier le statut/la priorité/fermer le ticket (technicien uniquement) -->
+<?php if ($_SESSION['role'] === 'technicien' || $_SESSION['role'] === 'administrateur') : 
     require_once "../partials/form_update_status.php";
     require_once "../partials/form_update_priority.php";
+    require_once "../partials/form_assign_ticket.php";
+    require_once "../partials/form_close_ticket.php";
+    
 endif; ?>
 
             <!-- Bloc messages -->
@@ -75,10 +76,7 @@ endif; ?>
                     <?php endif; ?>
                 </div>
             </div>
-            <?php if ($ticket["assigned_technician"] === $_SESSION["name"] || $_SESSION["role"] === "admin"): ?>
-                <!-- Formulaire d'envoi -->
                 <?php require_once "../partials/form_send_message.php"; ?>
-            <?php endif; ?>
         </div>
     </div>
 </div>

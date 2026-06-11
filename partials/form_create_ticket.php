@@ -40,7 +40,7 @@
 
         <div class="d-grid">
             <button type="submit" name="create_ticket" class="btn btn-primary">
-                Créer le ticket
+                Créer un ticket
             </button>
         </div>
 
